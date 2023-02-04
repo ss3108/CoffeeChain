@@ -1,45 +1,38 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-// import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-// dotenv.config()
-// const hre = require("hardhat");
-import hardhat from "hardhat"
+const hardhat = require("hardhat");
+const { ethers } = hardhat;
+const { expect } = require('chai');
 require("dotenv").config({ path: ".env" });
 
 async function main() {
-  //Deploy Supplychain
-  const SupplyChain = await hardhat.ethers.getContractFactory('SupplyChain');
+  // Deploy Supplychain
+  const SupplyChain = await ethers.ContractFactory.fromArtifact('SupplyChain', hardhat.network.provider);
   const supplyChain = await SupplyChain.deploy();
-  await supplyChain.deployed();
-  console.log(`SupplyChain Address deployed to ${SupplyChain.address}`);
+  await supplyChain.deployment();
+  console.log(`SupplyChain Address deployed to ${supplyChain.address}`);
 
   // Deploy Farmer
-  const FarmerRole = await hardhat.ethers.getContractFactory('FarmerRole');
+  const FarmerRole = await ethers.ContractFactory.fromArtifact('FarmerRole', hardhat.network.provider);
   const farmerRole = await FarmerRole.deploy();
-  await farmerRole.deployed();
-  console.log(`Farmer Address deployed to ${FarmerRole.address}`);
+  await farmerRole.deployment();
+  console.log(`Farmer Address deployed to ${farmerRole.address}`);
 
   // Deploy Consumer
-  const ConsumerRole = await hardhat.ethers.getContractFactory('ConsumerRole');
+  const ConsumerRole = await ethers.ContractFactory.fromArtifact('ConsumerRole', hardhat.network.provider);
   const consumerRole = await ConsumerRole.deploy();
-  await consumerRole.deployed();
+  await consumerRole.deployment();
   console.log(`Consumer Address deployed to ${consumerRole.address}`);
 
-  // Deploy Retailer
-  const RetailerRole = await hardhat.ethers.getContractFactory('RetailerRole');
-  const retailerRole = await RetailerRole.deploy();
-  await retailerRole.deployed();
-  console.log(`Retailer Address deployed to ${retailerRole.address}`); 
-
   // Deploy Distributor
-  const DistributorRole = await hardhat.ethers.getContractFactory('DistributorRole');
+  const DistributorRole = await ethers.ContractFactory.fromArtifact('DistributorRole', hardhat.network.provider);
   const distributorRole = await DistributorRole.deploy();
-  await distributorRole.deployed();
-  console.log(`Distributor Address deployed to ${DistributorRole.address}`); 
+  await distributorRole.deployment();
+  console.log(`Distributor Address deployed to ${distributorRole.address}`);
+
+  // Deploy Retailer
+  const RetailerRole = await ethers.ContractFactory.fromArtifact('RetailerRole', hardhat.network.provider);
+  const retailerRole = await RetailerRole.deploy();
+  await retailerRole.deployment();
+  console.log(`Retailer Address deployed to ${retailerRole.address}`);
 }
 
 // Call the main function and catch if there is any error
