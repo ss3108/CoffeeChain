@@ -85,16 +85,16 @@ it("Testing smart contract function harvestItem() that allows a farmer to harves
         await supplyChain.addFarmer(originFarmerID);
         
         // Declare and Initialize a variable for event
-        // var eventEmitted = false
+        var eventEmitted = false
         let eventEmitted = false;
 
         await supplyChain.Harvested((err, res) => eventEmitted = true);
         
         // Watch the emitted event Harvested()
-        // var event = supplyChain.Harvested()
-        // await event.watch((err, res) => {
-        //    eventEmitted = true
-        // })
+         var event = supplyChain.Harvested()
+        await event.watch((err, res) => {
+            eventEmitted = true
+        })
 
         // Mark an item as Harvested by calling function harvestItem()
         await supplyChain.harvestItem(
@@ -264,7 +264,7 @@ it("Testing smart contract function harvestItem() that allows a farmer to harves
         
         // Watch the emitted event Received()
         await supplyChain.Received((err, res) => eventEmitted = true);
-        /*
+        
         // Mark an item as Sold by calling function buyItem()
         await supplyChain.receiveItem(upc, { from: retailerID });
         
@@ -276,19 +276,18 @@ it("Testing smart contract function harvestItem() that allows a farmer to harves
         assert.equal(resultBufferTwo[7], retailerID, 'Error: there is an invalid distributorID here');
         assert.equal(resultBufferTwo[5], itemState, 'Error: there is an invalid item state here');
         assert.equal(eventEmitted, true, 'Error: the requested received event is not emitted');
-        */
     });
 
     // 8th Test
     it("Testing smart contract function purchaseItem() that allows a consumer to purchase coffee", async() => {
         const supplyChain = await SupplyChain.deployed()
         
-        // await supplyChain.addConsumer(consumerID);
+        await supplyChain.addConsumer(consumerID);
         
         // Declare and Initialize a variable for event
         let eventEmitted = false;
         
-        /*
+        
         // Watch the emitted event Purchased()
         await supplyChain.Purchased((err, res) => eventEmitted = true);
         // Mark an item as Sold by calling function buyItem()
@@ -300,7 +299,6 @@ it("Testing smart contract function harvestItem() that allows a farmer to harves
         assert.equal(resultBufferTwo[9], consumerID, 'Error: there is an invalid consumerID called here');
         // assert.equal(resultBufferTwo[5], itemState, 'Error: there is an invalid item state called here');
         assert.equal(eventEmitted, true, 'Error: the requested purchased event has not emitted');
-        */
     });    
 
     // 9th Test
@@ -343,6 +341,6 @@ it("Testing smart contract function harvestItem() that allows a farmer to harves
         assert.equal(resultBufferTwo[4], productPrice, 'Error: there is an invalid productPrice here');
         assert.equal(resultBufferTwo[5], itemState, 'Error: there is an invalid itemState here');
         assert.equal(resultBufferTwo[6], distributorID, 'Error: there is an invalid distributorID here');
-        // assert.equal(resultBufferTwo[7], retailerID, 'Error: there is an invalid reatailerID here');
-        // assert.equal(resultBufferTwo[8], consumerID, 'Error: there is an invalid consumerID here');
+        assert.equal(resultBufferTwo[7], retailerID, 'Error: there is an invalid reatailerID here');
+        assert.equal(resultBufferTwo[8], consumerID, 'Error: there is an invalid consumerID here');
     });

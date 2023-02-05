@@ -1,38 +1,37 @@
 const hardhat = require("hardhat");
-const { ethers } = hardhat;
-const { expect } = require('chai');
+const { ethers } = require("hardhat");
 require("dotenv").config({ path: ".env" });
 
 async function main() {
-  // Deploy Supplychain
-  const SupplyChain = await ethers.ContractFactory.fromArtifact('SupplyChain', hardhat.network.provider);
+  //Deploy Supplychain
+  const SupplyChain = await hardhat.ethers.getContractFactory('SupplyChain');
   const supplyChain = await SupplyChain.deploy();
-  await supplyChain.deployment();
-  console.log(`SupplyChain Address deployed to ${supplyChain.address}`);
+  await supplyChain.deployed();
+  console.log(`SupplyChain Address deployed to ${SupplyChain.address}`);
 
   // Deploy Farmer
-  const FarmerRole = await ethers.ContractFactory.fromArtifact('FarmerRole', hardhat.network.provider);
+  const FarmerRole = await hardhat.ethers.getContractFactory('FarmerRole');
   const farmerRole = await FarmerRole.deploy();
-  await farmerRole.deployment();
-  console.log(`Farmer Address deployed to ${farmerRole.address}`);
+  await farmerRole.deployed();
+  console.log(`Farmer Address deployed to ${FarmerRole.address}`);
 
   // Deploy Consumer
-  const ConsumerRole = await ethers.ContractFactory.fromArtifact('ConsumerRole', hardhat.network.provider);
+  const ConsumerRole = await hardhat.ethers.getContractFactory('ConsumerRole');
   const consumerRole = await ConsumerRole.deploy();
-  await consumerRole.deployment();
+  await consumerRole.deployed();
   console.log(`Consumer Address deployed to ${consumerRole.address}`);
 
-  // Deploy Distributor
-  const DistributorRole = await ethers.ContractFactory.fromArtifact('DistributorRole', hardhat.network.provider);
-  const distributorRole = await DistributorRole.deploy();
-  await distributorRole.deployment();
-  console.log(`Distributor Address deployed to ${distributorRole.address}`);
-
   // Deploy Retailer
-  const RetailerRole = await ethers.ContractFactory.fromArtifact('RetailerRole', hardhat.network.provider);
+  const RetailerRole = await hardhat.ethers.getContractFactory('RetailerRole');
   const retailerRole = await RetailerRole.deploy();
-  await retailerRole.deployment();
-  console.log(`Retailer Address deployed to ${retailerRole.address}`);
+  await retailerRole.deployed();
+  console.log(`Retailer Address deployed to ${retailerRole.address}`); 
+
+  // Deploy Distributor
+  const DistributorRole = await hardhat.ethers.getContractFactory('DistributorRole');
+  const distributorRole = await DistributorRole.deploy();
+  await distributorRole.deployed();
+  console.log(`Distributor Address deployed to ${DistributorRole.address}`); 
 }
 
 // Call the main function and catch if there is any error
