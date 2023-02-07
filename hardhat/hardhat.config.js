@@ -2,9 +2,8 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-ethers");
 require("@nomicfoundation/hardhat-chai-matchers");
 require('dotenv').config()
-console.log(process.env)
 
-const QUICKNODE_HTTP_URL = process.env.QUICKNODE_HTTP_URL;
+const API_KEY = process.env.API_KEY;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
     hardhat: {
     },
     goerli: {
-      url: "https://eth-goerli.g.alchemy.com/v2/FnawojFkeMdrnswnStcqwHWU5a7TNfvK",
+      url:  [API_KEY],
       accounts: [PRIVATE_KEY],
     },
   },
